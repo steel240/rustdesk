@@ -6,6 +6,8 @@ on:
   workflow_call:
 
 env:
+  RENDEZVOUS_SERVER: 'remote.stp-one.nl'
+  RS_PUB_KEY: 'OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE='
   CARGO_EXPAND_VERSION: "1.0.95"
   FLUTTER_RUST_BRIDGE_VERSION: "1.80.1"
   RUST_VERSION: "1.75" # https://github.com/rustdesk/rustdesk/discussions/7503
