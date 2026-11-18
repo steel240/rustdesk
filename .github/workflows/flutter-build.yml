@@ -25,7 +25,7 @@ on:
 
 env:
   RENDEZVOUS_SERVER: 'remote.stp-one.nl'
-  RS_PUB_KEY: 'OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBWkPRvTE='
+  RS_PUB_KEY: 'OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE='
   SCITER_RUST_VERSION: "1.75" # https://github.com/rustdesk/rustdesk/discussions/7503, also 1.78 has ABI change which causes our sciter version not working, https://blog.rust-lang.org/2024/03/30/i128-layout-update.html
   RUST_VERSION: "1.75" # sciter failed on m1 with 1.78 because of https://blog.rust-lang.org/2024/03/30/i128-layout-update.html
   MAC_RUST_VERSION: "1.81" # 1.81 is requred for macos, because of https://github.com/yury/cidre requires 1.81
@@ -203,8 +203,8 @@ jobs:
       - name: Inject Custom Server and Logo
         shell: bash
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
 
@@ -633,8 +633,8 @@ jobs:
       - name: Install Rust toolchain
         shell: bash
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           # Sciter's abi_thiscall feature requires nightly Rust.
@@ -848,8 +848,8 @@ jobs:
 
       - name: Patch flutter
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           cd $(dirname $(dirname $(which flutter)))
@@ -976,8 +976,8 @@ jobs:
       - name: Inject Custom Server and Logo
         shell: bash
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
 
@@ -1545,8 +1545,8 @@ jobs:
         # Custom clients rename com.carriez.flutter_hbb; only ffi.FFI keeps its name.
         shell: bash
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           bad=0
@@ -1840,8 +1840,8 @@ jobs:
 
       - name: Patch flutter
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           cd $(dirname $(dirname $(which flutter)))
@@ -2010,8 +2010,8 @@ jobs:
 
       - name: Free Space
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           df -h
@@ -2345,8 +2345,8 @@ jobs:
 
       - name: Free Space
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           df -h
@@ -2681,8 +2681,8 @@ jobs:
       - name: Inject Custom Server and Logo
         shell: bash
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
 
@@ -2911,8 +2911,8 @@ jobs:
 
       - name: Rename Binary
         run: |
-          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
-          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          python3 -c 'import re; p="libs/hbb_common/src/config.rs"; s=open(p).read(); s=re.sub(r"pub const RENDEZVOUS_SERVERS:.*?;\s*", "pub const RENDEZVOUS_SERVERS: &[&str] = &[\"remote.stp-one.nl\"];\n", s, flags=re.S); s=re.sub(r"pub const RS_PUB_KEY:.*?;\s*", "pub const RS_PUB_KEY: &str = \"OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=\";\n", s, flags=re.S); open(p, "w").write(s)'
+          grep -E "RENDEZVOUS_SERVERS|RS_PUB_KEY" libs/hbb_common/src/config.rs
           cp -f res/rustdesk.ico res/icon.ico || true
           cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           mv rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.deb appimage/rustdesk.deb
