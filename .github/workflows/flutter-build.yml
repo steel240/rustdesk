@@ -200,6 +200,14 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Inject Custom Server and Logo
+        shell: bash
+        run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
+
       - name: Restore bridge files
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -625,6 +633,10 @@ jobs:
       - name: Install Rust toolchain
         shell: bash
         run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           # Sciter's abi_thiscall feature requires nightly Rust.
           # Use an i686 host toolchain so build scripts can load the 32-bit LLVM installed above.
           # Since rustup 1.29.1, i686 toolchains on x64 Windows require --force-non-host
@@ -836,6 +848,10 @@ jobs:
 
       - name: Patch flutter
         run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           cd $(dirname $(dirname $(which flutter)))
           if [[ "3.24.5" == ${{env.FLUTTER_VERSION}} ]]; then
             git apply ${{ github.workspace }}/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff
@@ -956,6 +972,14 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           submodules: recursive
+
+      - name: Inject Custom Server and Logo
+        shell: bash
+        run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
 
       - name: Import the codesign cert
         if: env.MACOS_P12_BASE64 != null
@@ -1521,6 +1545,10 @@ jobs:
         # Custom clients rename com.carriez.flutter_hbb; only ffi.FFI keeps its name.
         shell: bash
         run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           bad=0
           grep -rnE --include='*.rs' 'fn Java_' src libs | grep -v 'fn Java_ffi_FFI_' && bad=1
           grep -rl --include='*.kt' 'external fun' flutter/android \
@@ -1812,6 +1840,10 @@ jobs:
 
       - name: Patch flutter
         run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           cd $(dirname $(dirname $(which flutter)))
           if [[ "3.24.5" == ${{env.ANDROID_FLUTTER_VERSION}} ]]; then
             git apply ${{ github.workspace }}/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff
@@ -1978,6 +2010,10 @@ jobs:
 
       - name: Free Space
         run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           df -h
           free -m
 
@@ -2309,6 +2345,10 @@ jobs:
 
       - name: Free Space
         run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           df -h
           free -m
 
@@ -2638,6 +2678,14 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Inject Custom Server and Logo
+        shell: bash
+        run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
+
       - name: Modify vcpkg.json for armv7
         if: matrix.job.vcpkg-triplet == 'arm-linux'
         run: |
@@ -2863,6 +2911,10 @@ jobs:
 
       - name: Rename Binary
         run: |
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/OyNEIrjwo3eeCgdpGT7+W7P3oFuZP6+FApqBwkPRvTE=/g' libs/hbb_common/src/config.rs
+          sed -i 's/pub const RENDEZVOUS_SERVERS: &\[&str\] = &\[\];/pub const RENDEZVOUS_SERVERS: \&[\&str] = \&["remote.stp-one.nl"];/g' libs/hbb_common/src/config.rs
+          cp -f res/rustdesk.ico res/icon.ico || true
+          cp -f res/rustdesk.ico flutter/windows/runner/resources/app_icon.ico || true
           mv rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.deb appimage/rustdesk.deb
 
       - name: Build appimage package
